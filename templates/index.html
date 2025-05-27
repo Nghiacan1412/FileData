@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload File Excel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset CSS */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 100vh;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      :root {
+        --primary-color: #c32126;
+        --background-color: #ffffff;
+        --text-color: #212529;
+        --container-bg: #ffffff;
+        --container-border: #ced4da;
+        --button-bg: var(--primary-color);
+        --button-hover-bg: #a51b20;
+        --link-color: var(--primary-color);
+        --link-hover-color: #a51b20;
+      }
+
+      [data-theme="dark"] {
+        --background-color: #1c1c1c;
+        --text-color: #f8f9fa;
+        --container-bg: #2b2b2b;
+        --container-border: #495057;
+        --primary-color: #da4348;
+        --button-bg: var(--primary-color);
+        --button-hover-bg: #a51b20;
+        --link-color: var(--primary-color);
+        --link-hover-color: #a51b20;
+        --success-color: #28a745;
+        --error-color: #dc3545;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .container {
+        background: var(--container-bg);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 400px;
+        border: 1px solid var(--container-border);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        margin: auto; /* Đảm bảo container được căn giữa */
+      }
+
+      .header {
+        width: 100%;
+        height: 80px;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--container-bg);
+        border-bottom: 1px solid var(--container-border);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+
+      .header-title {
+        font-size: 30px;
+        font-weight: 700;
+        color: var(--primary-color);
+        text-align: center;
+        flex-grow: 1;
+        transform: translateX(calc(0.8% + 20px));
+        margin-top: 25px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+
+      .logo img {
+        max-height: 100%;
+        height: auto;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+        transform-origin: left center;
+      }
+
+      .logo img:hover {
+        transform: scale(1.2);
+      }
+
+      .theme-toggle {
+        background: var(--button-bg);
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+      }
+
+      .theme-toggle:hover {
+        background: var(--button-hover-bg);
+      }
+      .container {
+        background: var(--container-bg);
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 400px;
+        border: 1px solid var(--container-border);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      p.description {
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: var(--text-color);
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      input[type="file"] {
+        display: block;
+        margin: 10px auto 20px auto;
+        padding: 10px;
+        border: 1px solid var(--container-border);
+        border-radius: 5px;
+        width: 100%;
+        font-size: 14px;
+        background-color: var(--container-bg);
+        color: var(--text-color);
+        transition: all 0.3s ease;
+      }
+
+      input[type="file"]:hover {
+        border-color: var(--link-color);
+      }
+
+      button {
+        background-color: var(--button-bg);
+        color: #ffffff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: var(--button-hover-bg);
+        box-shadow: 0 0 10px var(--button-hover-bg); /* Hiệu ứng phát sáng */
+      }
+
+      .success {
+        color: var(--success-color);
+        margin-top: 20px;
+        font-size: 14px;
+      }
+
+      .error {
+        color: var(--error-color);
+        margin-top: 20px;
+        font-size: 14px;
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--link-color);
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: var(--link-hover-color);
+        text-shadow: 0 0 5px var(--link-hover-color); /* Hiệu ứng phát sáng cho liên kết */
+      }
+
+      .footer {
+        width: 100%;
+        padding: 10px 20px;
+        text-align: center;
+        background-color: var(--container-bg);
+        border-top: 1px solid var(--container-border);
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+
+      .footer p {
+        font-size: 14px;
+        color: var(--text-color);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <img
+          src="{{ url_for('static', filename='image/logodntu.png') }}"
+          alt="Logo"
+        />
+      </div>
+      <h1 class="header-title">ỨNG DỤNG XỬ LÝ FILE DỮ LIỆU</h1>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        Chuyển đổi chế độ
+      </button>
+    </div>
+
+    <!-- Nội dung chính -->
+    <div class="container">
+      <h1>Upload File Excel</h1>
+      <p class="description">
+        Ứng dụng này cho phép bạn tải lên file dữ liệu và xử lý dữ liệu một cách
+        nhanh chóng.
+      </p>
+      <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" multiple required />
+        <button type="submit">Upload</button>
+      </form>
+      {% if success == True %}
+      <p class="success">
+        File đã xử lý thành công!
+        <a href="/download/{{ download_link }}">Tải kết quả</a>
+      </p>
+      {% elif success == False %}
+      <p class="error">Lỗi: {{ error }}</p>
+      {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 2025 Ứng dụng xử lý file. Ban tuyển sinh DNTU.</p>
+    </div>
+
+    <script>
+      function toggleTheme() {
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme");
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+      }
+
+      // Lưu trạng thái theme
+      const savedTheme = localStorage.getItem("theme") || "light";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    </script>
+  </body>
+</html>
