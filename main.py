@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, send_file
 import pandas as pd
 import os
 import zipfile
-import datetime
+from datetime import datetime
 from unidecode import unidecode
 
 app = Flask(__name__)
@@ -95,10 +95,12 @@ def upload_file():
         file = request.files['file']
         if file:
             try:
-                # Lưu file tải lên
-                now = datetime.datetime.now()
+                # Lưu file tải lên và đổi tên
+                now = datetime.now()
                 time = now.strftime("%d%m%y")  # Định dạng ngày, tháng, năm
-                file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+                file_extension = os.path.splitext(file.filename)[1]  # Lấy phần mở rộng file
+                renamed_file = f'export-{time}{file_extension}'
+                file_path = os.path.join(UPLOAD_FOLDER, renamed_file)
                 file.save(file_path)
 
                 # Xử lý file
@@ -134,6 +136,7 @@ def upload_file():
             except Exception as e:
                 return render_template('index.html', success=False, error=str(e))
     return render_template('index.html', success=None)
+
 @app.route('/download/<path:filename>')
 def download_file(filename):
     return send_file(filename, as_attachment=True)
